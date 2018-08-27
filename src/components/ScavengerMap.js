@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import ClueIcon from './ClueIcon.js';
+//import ClueIcon from './ClueIcon.js';
   
 export default class ScavengerMap extends Component {
   static defaultProps = {
@@ -17,7 +17,7 @@ export default class ScavengerMap extends Component {
   render() {
     return (
       // Important! Always set the container height explicitly
-      <div style={{ height: '80vh', width: '100%' }}>
+      <div style={{ height: '100vh', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyAG8s_-MD-objxCQmPowqPMjt_-gHrDDU8' }}
           defaultCenter={this.props.center}

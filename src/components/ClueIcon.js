@@ -22,6 +22,9 @@ export default class ClueIcon extends Component {
 
       case 'done':
         return 'check-circle';
+
+      default:
+        return 'lock';
     }
   }
 
@@ -35,6 +38,9 @@ export default class ClueIcon extends Component {
 
       case 'done':
         return '#27AE60';
+
+      default:
+        return '#333333';
     }
   }
  
