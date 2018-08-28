@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Chat.css';
 import FirebaseMain from '../database/FirebaseMain.js';
+import uuidv4 from 'uuid/v4';
   
 export default class Chat extends Component {
   constructor(props) {
@@ -24,7 +25,6 @@ export default class Chat extends Component {
   }
     
   sortMessages() {
-    console.log(this.messages);
     this.messages.sort(this.compareMessages);
     this.setState({messages: this.messages});
   }
@@ -85,7 +85,7 @@ export default class Chat extends Component {
 
   handleSubmit(event) {
     var messageObject = {
-      _id: 'irrelevant',
+      _id: uuidv4(),
       createdAt: new Date().toISOString(),
       text: this.state.messageText,
       user: {
