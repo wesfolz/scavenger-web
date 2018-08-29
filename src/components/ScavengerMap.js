@@ -5,13 +5,14 @@ import GoogleMapReact from 'google-map-react';
 export default class ScavengerMap extends Component {
   static defaultProps = {
     locations: [
-      <div />
+      <div/>
     ],
+    userLocation: <div/>,
     center: {
       lat: 39.637376,
       lng: -104.995604
     },
-    zoom: 11
+    zoom: 12
   };
 
   render() {
@@ -24,6 +25,7 @@ export default class ScavengerMap extends Component {
           defaultZoom={this.props.zoom}
         >
         {this.props.locations}
+        {this.props.userLocation}
         {/*<ClueIcon
             lat={this.props.locations[0].coords.latitude}
             lng={this.props.locations[0].coords.longitude}

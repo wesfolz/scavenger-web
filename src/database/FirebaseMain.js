@@ -28,7 +28,7 @@ export default class FirebaseMain {
   }
 
   static getLocationRef(user) {
-    return firebase.database().ref(user + '/locations');
+    return firebase.database().ref(user + '/location');
   }
 
   static addMessage(user, message) {
