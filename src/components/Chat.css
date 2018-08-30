@@ -1,15 +1,13 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   justify-content: flex-end;
-  /*align-items: flex-start;*/
 }
 .chat-container ul {
   list-style: none;
   overflow-y: auto;
   background: white;
-  height: 88vh;
+  height: 83vh;
 }
 
 .chat-container li {
@@ -66,5 +64,5 @@
 .form input {
   /*box-sizing: border-box;*/
   width: 300px;
-  margin: 5px;
+  margin: 0px 5px;
 }

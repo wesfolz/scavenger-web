@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import ScavengerMap from './components/ScavengerMap.js';
 import ClueIcon from './components/ClueIcon.js';
@@ -7,10 +6,10 @@ import FirebaseMain from './database/FirebaseMain.js';
 import Chat from './components/Chat.js';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCarSide } from '@fortawesome/free-solid-svg-icons';
+import { faCarSide, faBars } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faCarSide);
-
+library.add(faBars);
 
 class App extends Component {
   constructor() {
@@ -24,7 +23,8 @@ class App extends Component {
       locations: [
         <div/>
       ],
-      userLocation: <div/>
+      userLocation: <div/>,
+      sidebarStyle: 'visible',
     };
 
     FirebaseMain.getGoalsRef().once('value').then((goals) => this.generateClueIcons(goals.val()));
@@ -52,13 +52,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/*<header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>*/}
+        <nav class="navbar bg-dark navbar-dark justify-content-end">
+          <FontAwesomeIcon icon={'bars'} size='2x' color={'#E0E0E0'} onClick={() => 
+            this.setState({sidebarStyle: (this.state.sidebarStyle === 'visible' ? 'hidden' : 'visible')})}/>
+        </nav>
         <div className="content">
           <ScavengerMap locations={this.state.locations} userLocation={this.state.userLocation}/>
-          <Chat user={this.user} interlocutor={this.interlocutor}/>
+          <nav className={this.state.sidebarStyle}>
+            <Chat user={this.user} interlocutor={this.interlocutor}/>
+          </nav>
         </div>
       </div>
     );
