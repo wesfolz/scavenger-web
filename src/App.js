@@ -27,7 +27,7 @@ class App extends Component {
       sidebarStyle: 'visible',
     };
 
-    FirebaseMain.getGoalsRef().once('value').then((goals) => this.generateClueIcons(goals.val()));
+    FirebaseMain.getGoalsRef().on('value', (goals) => this.generateClueIcons(goals.val()));
     FirebaseMain.getLocationRef(this.interlocutor).on('value', (location) => this.updateUserLocation(location.val()));
   }
 

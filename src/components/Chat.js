@@ -12,6 +12,7 @@ export default class Chat extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.firstUpdate = true;
     this.messages = [];
+    this.messageUpdate = false;
   }
 
   componentWillMount() {
@@ -30,7 +31,6 @@ export default class Chat extends Component {
   }
 
   compareMessages(a, b) {
-    console.log(a);
     if(a.createdAt < b.createdAt) {
       return -1;
     }
@@ -52,10 +52,12 @@ export default class Chat extends Component {
   }
 
   updateMessages(messages) {
+    this.messageUpdate = true;
     this.messages = this.messages.concat(messages);
     this.setState({
       messages: this.messages,
     });
+    //this.scrollToBottom();
   }
 
   displayMessages() {
@@ -68,7 +70,6 @@ export default class Chat extends Component {
         className = 'left';
         color = 'purple';
       }
-      console.log(message.user.name);
       var time = new Date(message.createdAt).toLocaleTimeString();
       messageComponents.push(
         <li className={className}>
@@ -77,6 +78,14 @@ export default class Chat extends Component {
         </li>);
     }
     return messageComponents;
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
   }
 
   handleChange(event) {
@@ -93,10 +102,18 @@ export default class Chat extends Component {
         name: this.props.user,
       }
     };
-    this.updateMessages(messageObject);
     FirebaseMain.addMessage(this.props.interlocutor, messageObject);
     this.setState({messageText: ''});
+    this.updateMessages(messageObject);
     event.preventDefault();
+  }
+
+  scrollToBottom() {
+    if(this.messagesEnd != null && this.messageUpdate) {
+      console.log(this.messageUpdate);
+      this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+      this.messageUpdate = false;
+    }
   }
 
   render() {
@@ -104,6 +121,9 @@ export default class Chat extends Component {
       <div className="chat-container">
         <ul>
           {this.displayMessages()}
+          <div style={{ float:"left", clear: "both" }}
+             ref={(el) => { this.messagesEnd = el; }}>
+          </div>
         </ul>
         <form className="form" onSubmit={this.handleSubmit}>
           <input type="text" value={this.state.messageText} onChange={this.handleChange} />
