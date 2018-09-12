@@ -100,6 +100,7 @@ export default class Chat extends Component {
       user: {
         _id: 2,
         name: this.props.user,
+        avatar: 'https://firebasestorage.googleapis.com/v0/b/scavenger-5be15.appspot.com/o/Peach.jpg?alt=media&token=34af3658-28fd-45c5-a2d9-7267d924fedc'
       }
     };
     FirebaseMain.addMessage(this.props.interlocutor, messageObject);
@@ -127,7 +128,7 @@ export default class Chat extends Component {
         </ul>
         <form className="form" onSubmit={this.handleSubmit}>
           <input type="text" value={this.state.messageText} onChange={this.handleChange} />
-          <button className="form-button" type="submit" value="Submit">Send</button>
+          <button className="btn" type="submit" value="Submit">Send</button>
         </form>
       </div>
     );

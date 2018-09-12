@@ -9,8 +9,15 @@ library.add(faCheckCircle);
 
 export default class ClueIcon extends Component {
   static defaultProps = {
-    status: 'lock'
+    status: 'lock',
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showInfo: false,
+    }
+  }
 
   getIconName() {
     switch(this.props.status) {
@@ -43,10 +50,27 @@ export default class ClueIcon extends Component {
         return '#333333';
     }
   }
+
+  displayInfoCard() {
+    if(this.state.showInfo) {
+      return (<div className="card" style={{width: '8rem'}}>
+            <div className="card-body">
+              <h5 className="card-title">{this.props.name}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">{this.props.status}</h6>
+            </div>
+          </div>);
+    } else {
+      return null;
+    }
+  }
  
   render() {
     return (
-      <FontAwesomeIcon icon={this.getIconName()} size='2x' color={this.getColor()}/>
+      <div>
+        <FontAwesomeIcon onClick={() => this.setState({showInfo: !this.state.showInfo})} 
+          icon={this.getIconName()} size='2x' color={this.getColor()}/>
+        {this.displayInfoCard()}
+      </div>
     );
   }
 }

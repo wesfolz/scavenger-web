@@ -1,17 +1,18 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
 }
+
 .chat-container ul {
   list-style: none;
   overflow-y: auto;
   background: white;
   height: 83vh;
+  padding: 0;
 }
 
 .chat-container li {
-   margin: 15px 5px;
+   margin: 15px 15px;
 }
 
 .left {
@@ -43,7 +44,6 @@
 .purple {
   background: #9B51E0;
 }
-
 
 .form {
   display: flex;

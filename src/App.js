@@ -7,9 +7,7 @@ import Chat from './components/Chat.js';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCarSide, faBars } from '@fortawesome/free-solid-svg-icons';
-
-library.add(faCarSide);
-library.add(faBars);
+import { faComments } from '@fortawesome/fontawesome-free-regular';
 
 class App extends Component {
   constructor() {
@@ -17,7 +15,7 @@ class App extends Component {
     FirebaseMain.init();
 
     this.interlocutor = 'Alexa';
-    this.user = 'Puppy Jean';
+    this.user = 'Peach';
     
     this.state = {
       locations: [
@@ -34,7 +32,7 @@ class App extends Component {
   updateUserLocation(location) {
     if(location != null){
       this.setState({
-        userLocation: <FontAwesomeIcon icon={'car-side'} 
+        userLocation: <FontAwesomeIcon icon={faCarSide} 
           size='2x' color={'#2F80ED'} lat={location.coords.latitude} lng={location.coords.longitude}/>
       });
     }
@@ -44,7 +42,7 @@ class App extends Component {
     var clues = [];
     for (var key in goals) {
       var goal = goals[key];
-      clues.push(<ClueIcon lat={goal.coords.latitude} lng={goal.coords.longitude} status={goal.status}/>)
+      clues.push(<ClueIcon name={goal.name} lat={goal.coords.latitude} lng={goal.coords.longitude} status={goal.status}/>)
     }
     this.setState({locations: clues})
   }
@@ -52,8 +50,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <nav class="navbar bg-dark navbar-dark justify-content-end">
-          <FontAwesomeIcon icon={'bars'} size='2x' color={'#E0E0E0'} onClick={() => 
+        <nav className="navbar bg-dark navbar-dark justify-content-between">
+        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Goals
+        </button>
+        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a className="dropdown-item" href="#">Action</a>
+          <a className="dropdown-item" href="#">Another action</a>
+          <a className="dropdown-item" href="#">Something else here</a>
+        </div>
+          <FontAwesomeIcon icon={faComments} size='2x' color={'#E0E0E0'} onClick={() => 
             this.setState({sidebarStyle: (this.state.sidebarStyle === 'visible' ? 'hidden' : 'visible')})}/>
         </nav>
         <div className="content">
