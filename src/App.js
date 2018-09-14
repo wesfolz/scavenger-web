@@ -23,10 +23,12 @@ class App extends Component {
       ],
       userLocation: <div/>,
       sidebarStyle: 'visible',
+      currentGoalName: '',
     };
 
     FirebaseMain.getGoalsRef().on('value', (goals) => this.generateClueIcons(goals.val()));
     FirebaseMain.getLocationRef(this.interlocutor).on('value', (location) => this.updateUserLocation(location.val()));
+    FirebaseMain.getCurrentGoalRef().on('value', (goal) => this.setState({currentGoalName: goal.val().name}));
   }
 
   updateUserLocation(location) {
@@ -87,6 +89,7 @@ class App extends Component {
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {this.displayGoalDropdownIcons()}          
           </div>
+          <h4 className="text-white">{'Current Goal: ' + this.state.currentGoalName}</h4>
           <button className="btn btn-dark">
             <FontAwesomeIcon icon={faComments} size='2x' color={'#E0E0E0'} onClick={() => 
               this.setState({sidebarStyle: (this.state.sidebarStyle === 'visible' ? 'hidden' : 'visible')})}/>

@@ -31,12 +31,16 @@ export default class FirebaseMain {
     return firebase.database().ref(user + '/location');
   }
 
+  static getCurrentGoalRef() {
+    return firebase.database().ref('CurrentGoal');
+  }
+
   static addMessage(user, message) {
-    this.getMessageRef(user).push(message);
+    FirebaseMain.getMessageRef(user).push(message);
   }
 
   static addLocation(user, location) {
-    this.getLocationRef(user).push(location);
+    FirebaseMain.getLocationRef(user).push(location);
   }
 
 }
