@@ -10,6 +10,7 @@ library.add(faCheckCircle);
 export default class ClueIcon extends Component {
   static defaultProps = {
     status: 'lock',
+    showInfo: false,
   };
 
   constructor(props) {
@@ -52,7 +53,7 @@ export default class ClueIcon extends Component {
   }
 
   displayInfoCard() {
-    if(this.state.showInfo) {
+    if(this.props.showInfo) {
       return (<div className="card" style={{width: '8rem'}}>
             <div className="card-body">
               <h5 className="card-title">{this.props.name}</h5>
@@ -67,7 +68,7 @@ export default class ClueIcon extends Component {
   render() {
     return (
       <div>
-        <FontAwesomeIcon onClick={() => this.setState({showInfo: !this.state.showInfo})} 
+        <FontAwesomeIcon onClick={() => this.props.onClick()}
           icon={this.getIconName()} size='2x' color={this.getColor()}/>
         {this.displayInfoCard()}
       </div>

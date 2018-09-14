@@ -17,12 +17,7 @@ export default class Chat extends Component {
 
   componentWillMount() {
     FirebaseMain.getMessageRef(this.props.user).on('child_added', (data) => this.updateMessages(data.val())); 
-    //var query = FirebaseMain.getMessageRef(this.props.interlocutor).orderByChild('createdAt');
-    //query.once('value').then((data) => this.populateMessages(data.val()));
-    //var query = FirebaseMain.getMessageRef(this.props.user).orderByChild('createdAt');
-    //query.once('value').then((data) => this.populateMessages(data.val()));
     FirebaseMain.getMessageRef(this.props.interlocutor).once('value').then((data) => this.populateMessages(data.val()));
-    //this.state.messages.sort((a, b) => this.compareMessages(a, b));
   }
     
   sortMessages() {
@@ -61,23 +56,12 @@ export default class Chat extends Component {
   }
 
   displayMessages() {
-    var messageComponents = [];
-    for (var i=0; i < this.state.messages.length; i++) {
-      var message = this.state.messages[i];
-      var className = 'right';
-      var color = 'orange';
-      if (message.user._id === 1) {
-        className = 'left';
-        color = 'purple';
-      }
-      var time = new Date(message.createdAt).toLocaleTimeString();
-      messageComponents.push(
-        <li className={className}>
-          <div>{message.user.name}<br/>{time}</div>
-          <div className={color}>{message.text}</div>
-        </li>);
-    }
-    return messageComponents;
+    return (this.state.messages.map(message => (
+      <li key={message.createdAt} className={message.user._id === 1 ? 'left' : 'right'}>
+          <div>{message.user.name}<br/>{new Date(message.createdAt).toLocaleTimeString()}</div>
+          <div className={message.user._id === 1 ? 'purple' : 'orange'}>{message.text}</div>
+        </li> 
+    )));
   }
 
   componentDidMount() {
