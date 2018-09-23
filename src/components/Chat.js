@@ -111,8 +111,9 @@ export default class Chat extends Component {
           </div>
         </ul>
         <form className="form" onSubmit={this.handleSubmit}>
-          <input type="text" value={this.state.messageText} onChange={this.handleChange} />
-          <button className="btn" type="submit" value="Submit">Send</button>
+          <input className="form-control" type="text" value={this.state.messageText} 
+            onChange={this.handleChange} placeholder="Type a Message..."/>
+          <button className="btn btn-primary" type="submit" value="Submit">Send</button>
         </form>
       </div>
     );

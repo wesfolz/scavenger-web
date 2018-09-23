@@ -24,6 +24,7 @@ class App extends Component {
       userLocation: <div/>,
       sidebarStyle: 'visible',
       currentGoalName: '',
+      lastUpdated: '',
     };
 
     FirebaseMain.getGoalsRef().on('value', (goals) => this.generateClueIcons(goals.val()));
@@ -35,7 +36,8 @@ class App extends Component {
     if(location != null){
       this.setState({
         userLocation: <FontAwesomeIcon icon={faCarSide} 
-          size='2x' color={'#2F80ED'} lat={location.coords.latitude} lng={location.coords.longitude}/>
+          size='2x' color={'#2F80ED'} lat={location.coords.latitude} lng={location.coords.longitude}/>,
+        lastUpdated: this.convertUTCSecondsToTimeString(location.timestamp),
       });
     }
   }
@@ -51,7 +53,11 @@ class App extends Component {
   }
 
   clueIcon(goal) {
-    return <ClueIcon key={goal.name} name={goal.name} showInfo={goal.visible} onClick={() => this.selectClueIcon(goal.index)} lat={goal.coords.latitude} lng={goal.coords.longitude} status={goal.status}/>;
+    return(
+      <ClueIcon key={goal.name} name={goal.name} showInfo={goal.visible} 
+        onClick={() => this.selectClueIcon(goal.index)} 
+        lat={goal.coords.latitude} lng={goal.coords.longitude} status={goal.status}/>
+    );
   }
 
   generateClueIcons(goals) {
@@ -67,7 +73,11 @@ class App extends Component {
 
   displayGoalDropdownIcons() {
     return (this.goals.map(goal => (
-      <button key={goal.name} className="dropdown-item" onClick={() => this.selectClueIcon(goal.index)}>{goal.name}</button> )));
+        <button key={goal.name} className="dropdown-item" 
+          onClick={() => this.selectClueIcon(goal.index)}>
+          {goal.name}
+        </button> 
+      )));
   }
 
   selectClueIcon(index) {
@@ -79,20 +89,28 @@ class App extends Component {
     this.setState({locations: clues});
   }
 
+  convertUTCSecondsToTimeString(seconds) {
+    var d = new Date(seconds);
+    return d.toLocaleTimeString();
+  }
+
   render() {
     return (
       <div className="App">
         <nav className="navbar bg-dark navbar-dark justify-content-between">
-          <button className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Goals
-          </button>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {this.displayGoalDropdownIcons()}          
+          <div class="btn-group">
+            <button className="btn btn-dark btn-lg dropdown-toggle text-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Goals
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {this.displayGoalDropdownIcons()}          
+            </div>
           </div>
-          <h4 className="text-white">{'Current Goal: ' + this.state.currentGoalName}</h4>
-          <button className="btn btn-dark">
-            <FontAwesomeIcon icon={faComments} size='2x' color={'#E0E0E0'} onClick={() => 
-              this.setState({sidebarStyle: (this.state.sidebarStyle === 'visible' ? 'hidden' : 'visible')})}/>
+          <h5 className="text-primary">{'Current Goal: ' + this.state.currentGoalName}</h5>
+          <h5 className="text-primary">{'Last Location Update: ' + this.state.lastUpdated}</h5>
+          <button className="btn btn-dark" onClick={() => 
+            this.setState({sidebarStyle: (this.state.sidebarStyle === 'visible' ? 'hidden' : 'visible')})}>
+            <FontAwesomeIcon icon={faComments} size='2x' color={'#4285F4'}/>
           </button>
         </nav>
         <div className="content">

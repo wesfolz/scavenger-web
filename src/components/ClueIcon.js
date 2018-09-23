@@ -68,8 +68,11 @@ export default class ClueIcon extends Component {
   render() {
     return (
       <div>
-        <FontAwesomeIcon onClick={() => this.props.onClick()}
+        <button className="btn btn-outline-light btn-sm" data-toggle="tooltip" title={this.props.name} 
+          onClick={() => this.props.onClick()}>
+        <FontAwesomeIcon
           icon={this.getIconName()} size='2x' color={this.getColor()}/>
+        </button>
         {this.displayInfoCard()}
       </div>
     );
