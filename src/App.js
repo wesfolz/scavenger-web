@@ -114,7 +114,11 @@ class App extends Component {
           </button>
         </nav>
         <div className="content">
-          <ScavengerMap locations={this.state.locations} userLocation={this.state.userLocation}/>
+          <ScavengerMap>
+            {this.state.locations}
+            {this.state.userLocation}
+          </ScavengerMap>
+
           <nav className={this.state.sidebarStyle}>
             <Chat user={this.user} interlocutor={this.interlocutor}/>
           </nav>
