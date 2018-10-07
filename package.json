@@ -8,6 +8,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "@fortawesome/react-fontawesome": "^0.1.2",
     "firebase": "^5.4.1",
+    "firebase-admin": "^6.0.0",
+    "firebase-functions": "^2.0.5",
     "google-map-react": "^1.0.6",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
