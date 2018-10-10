@@ -1,14 +1,15 @@
 .App {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .content {
-  display: flex;
-  flex-direction: row;
-  overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
 }
+
 .visible {
     margin-right: 0;
 }

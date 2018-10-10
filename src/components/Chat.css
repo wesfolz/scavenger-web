@@ -1,68 +1,68 @@
 .chat-container {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat-container ul {
-  list-style: none;
-  overflow-y: auto;
-  background: white;
-  height: 81vh;
-  padding: 0;
+    list-style: none;
+    overflow-y: auto;
+    background: white;
+    height: 81vh;
+    padding: 0;
 }
 
 .chat-container li {
-   margin: 15px 15px;
+    margin: 15px 15px;
 }
 
 .left {
-  text-align: left;
+    text-align: left;
 }
 
 .right {
-  text-align: right;
+    text-align: right;
 }
 
-.chat-container div:nth-child(1){
-  font-size: 11px;
-  color: black;
-  opacity: 0.8;
-  margin-bottom: 5px;
+.chat-container div:nth-child(1) {
+    font-size: 11px;
+    color: black;
+    opacity: 0.8;
+    margin-bottom: 5px;
 }
 
-.chat-container div:nth-child(2){
-  color: white;
-  display: inline;
-  padding: 4px 8px;
-  border-radius: 8px;
+.chat-container div:nth-child(2) {
+    color: white;
+    display: inline;
+    padding: 4px 8px;
+    border-radius: 8px;
 }
 
 .orange {
-  background: #F2994A;
+    background: #F2994A;
 }
 
 .purple {
-  background: #9B51E0;
+    background: #9B51E0;
 }
 
 .form {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 .form button {
-  background-color: #2F80ED;
-  border: none;
-  color: white;
-  padding: 5px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  margin: 5px;
+    background-color: #2F80ED;
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 5px;
 }
 
 .form input {
-  /*box-sizing: border-box;*/
-  width: 300px;
-  margin: 0px 5px;
+    /*box-sizing: border-box;*/
+    width: 300px;
+    margin: 0px 5px;
 }
