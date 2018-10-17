@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
-import ScavengerMap from './components/ScavengerMap.js';
-import ClueIcon from './components/ClueIcon.js';
-import FirebaseMain from './database/FirebaseMain.js';
-import Chat from './components/Chat.js';
+import ScavengerMap from './components/ScavengerMap';
+import ClueIcon from './components/ClueIcon';
+import Headerbar from './components/Headerbar';
+import FirebaseMain from './database/FirebaseMain';
+import Chat from './components/Chat';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCarSide, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faCarSide } from '@fortawesome/free-solid-svg-icons';
 import { faComments } from '@fortawesome/fontawesome-free-regular';
+
+library.add(faComments);
+library.add(faCarSide);
 
 class App extends Component {
     constructor() {
@@ -35,7 +39,7 @@ class App extends Component {
     updateUserLocation(location) {
         if (location != null) {
             this.setState({
-                userLocation: <FontAwesomeIcon icon={faCarSide}
+                userLocation: <FontAwesomeIcon icon="car-side"
                     size='2x' color={'#2F80ED'} lat={location.coords.latitude} lng={location.coords.longitude} />,
                 lastUpdated: this.convertUTCSecondsToTimeString(location.timestamp),
             });
@@ -94,35 +98,24 @@ class App extends Component {
         return d.toLocaleTimeString();
     }
 
+    expandSidebar() {
+        this.setState({ sidebarStyle: (this.state.sidebarStyle === 'visible' ? 'hidden' : 'visible') });
+    }
+
     render() {
         return (
             <div className="App">
-                <nav className="navbar bg-dark navbar-dark justify-content-between">
-                    <div class="btn-group">
-                        <button className="btn btn-dark btn-lg dropdown-toggle text-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Goals
-            </button>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {this.displayGoalDropdownIcons()}
-                        </div>
-                    </div>
-                    <h5 className="text-primary">{'Current Goal: ' + this.state.currentGoalName}</h5>
-                    <h5 className="text-primary">{'Last Location Update: ' + this.state.lastUpdated}</h5>
-                    <button className="btn btn-dark" onClick={() =>
-                        this.setState({ sidebarStyle: (this.state.sidebarStyle === 'visible' ? 'hidden' : 'visible') })}>
-                        <FontAwesomeIcon icon={faComments} size='2x' color={'#4285F4'} />
-                    </button>
-                </nav>
+                <Headerbar goals={this.goals} selectClueIcon={(index) => this.selectClueIcon(index)} expandSidebar={() => this.expandSidebar()} {...this.state} />
                 <div className="content">
-                    <ScavengerMap>
-                        {this.state.locations}
-                        {this.state.userLocation}
-                    </ScavengerMap>
-
-                    <nav className={this.state.sidebarStyle}>
+                    <div className={this.state.sidebarStyle}>
                         <Chat user={this.user} interlocutor={this.interlocutor} />
-                    </nav>
+                    </div>
                 </div>
+                <ScavengerMap>
+                    {this.state.locations}
+                    {this.state.userLocation}
+                </ScavengerMap>
+
             </div>
         );
     }

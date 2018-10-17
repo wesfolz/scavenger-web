@@ -110,10 +110,12 @@ export default class Chat extends Component {
                         ref={(el) => { this.messagesEnd = el; }}>
                     </div>
                 </ul>
-                <form className="form" onSubmit={this.handleSubmit}>
-                    <input className="form-control" type="text" value={this.state.messageText}
-                        onChange={this.handleChange} placeholder="Type a Message..." />
-                    <button className="btn btn-primary" type="submit" value="Submit">Send</button>
+                <form className="form-inline" onSubmit={this.handleSubmit}>
+                    <div className="form-group">
+                        <input className="form-control m-1" type="text" value={this.state.messageText}
+                            onChange={this.handleChange} placeholder="Type a Message..." />
+                        <button className="btn btn-primary m-1" type="submit" value="Submit">Send</button>
+                    </div>
                 </form>
             </div>
         );
