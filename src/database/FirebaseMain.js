@@ -35,6 +35,14 @@ export default class FirebaseMain {
         return firebase.database().ref('CurrentGoal');
     }
 
+    static getFinalGoalStatusRef() {
+        return firebase.database().ref('FinalGoal/status');
+    }
+
+    static setFinalGoalStatus() {
+        FirebaseMain.getFinalGoalStatusRef().set('done');
+    }
+
     static addMessage(user, message) {
         FirebaseMain.getMessageRef(user).push(message);
     }

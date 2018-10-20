@@ -8,9 +8,8 @@ import Chat from './components/Chat';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCarSide } from '@fortawesome/free-solid-svg-icons';
-import { faComments } from '@fortawesome/fontawesome-free-regular';
+import ConfirmationModal from './components/ConfirmationModal';
 
-library.add(faComments);
 library.add(faCarSide);
 
 class App extends Component {
@@ -22,13 +21,13 @@ class App extends Component {
         this.user = 'Peach';
         this.goals = [];
         this.state = {
-            locations: [
-                <div />
-            ],
+            locations: [],
+            codes: [],
             userLocation: <div />,
             sidebarStyle: 'visible',
             currentGoalName: '',
             lastUpdated: '',
+            modalVisible: false,
         };
 
         FirebaseMain.getGoalsRef().on('value', (goals) => this.generateClueIcons(goals.val()));
@@ -70,31 +69,45 @@ class App extends Component {
             return goals[key];
         });
         this.goals.sort(this.compareGoals);
-        const clues = this.goals.map(goal => (
-            this.clueIcon(goal)));
-        this.setState({ locations: clues })
-    }
+        const locations = [];
+        const codes = [];
 
-    displayGoalDropdownIcons() {
-        return (this.goals.map(goal => (
-            <button key={goal.name} className="dropdown-item"
-                onClick={() => this.selectClueIcon(goal.index)}>
-                {goal.name}
-            </button>
-        )));
+        for (let i = 0; i < this.goals.length; i++) {
+            let goal = this.goals[i];
+            if (goal.type === "location") {
+                locations.push(this.clueIcon(goal));
+            }
+            else {
+                codes.push(this.clueIcon(goal));
+            }
+        }
+
+        this.setState({ locations, codes })
     }
 
     selectClueIcon(index) {
-        var goal = this.goals[index];
-        goal.visible = !goal.visible;
-        this.goals[index] = goal;
-        const clues = this.state.locations.slice();
-        clues[index] = this.clueIcon(goal);
-        this.setState({ locations: clues });
+        const goal = this.goals[index];
+        if (this.state.currentGoalName === "finale" && goal.name === "home") {
+            this.setState({
+                modalVisible: true,
+            })
+        } else {
+            goal.visible = !goal.visible;
+            this.goals[index] = goal;
+            if (goal.type === "location") {
+                const locations = this.state.locations.slice();
+                locations[index] = this.clueIcon(goal);
+                this.setState({ locations });
+            } else {
+                const codes = this.state.codes.slice();
+                codes[index] = this.clueIcon(goal);
+                this.setState({ codes });
+            }
+        }
     }
 
     convertUTCSecondsToTimeString(seconds) {
-        var d = new Date(seconds);
+        const d = new Date(seconds);
         return d.toLocaleTimeString();
     }
 
@@ -102,20 +115,34 @@ class App extends Component {
         this.setState({ sidebarStyle: (this.state.sidebarStyle === 'visible' ? 'hidden' : 'visible') });
     }
 
+    confirmModal(confirm) {
+        if (confirm) {
+            FirebaseMain.setFinalGoalStatus();
+        }
+        this.setState({
+            modalVisible: false,
+        });
+    }
+
     render() {
         return (
             <div className="App">
                 <Headerbar goals={this.goals} selectClueIcon={(index) => this.selectClueIcon(index)} expandSidebar={() => this.expandSidebar()} {...this.state} />
-                <div className="content">
-                    <div className={this.state.sidebarStyle}>
-                        <Chat user={this.user} interlocutor={this.interlocutor} />
-                    </div>
-                </div>
                 <ScavengerMap>
                     {this.state.locations}
                     {this.state.userLocation}
                 </ScavengerMap>
-
+                <div className="d-flex flex-direction-row h-100 justify-content-between">
+                    <div className="btn-group" style={{ zIndex: 100, height: 0 }}>
+                        {this.state.codes}
+                    </div>
+                    <div className="content">
+                        <div className={this.state.sidebarStyle}>
+                            <Chat user={this.user} interlocutor={this.interlocutor} />
+                        </div>
+                    </div>
+                </div>
+                {this.state.modalVisible ? <ConfirmationModal confirmModal={(confirm) => this.confirmModal(confirm)} /> : null}
             </div>
         );
     }

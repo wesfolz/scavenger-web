@@ -2,28 +2,32 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments } from '@fortawesome/fontawesome-free-regular';
 
-
-
 const Headerbar = ({ goals, selectClueIcon, expandSidebar, currentGoalName, lastUpdated }) => {
 
     const displayGoalDropdownIcons = () => {
-        return (goals.map(goal => (
-            <button key={goal.name} className="dropdown-item"
-                onClick={() => selectClueIcon(goal.index)}>
-                {goal.name}
-            </button>
+        for (var i = 0; i < goals.length; i++) {
+            if (goals[i].type === "location") {
+                break;
+            }
+        }
+        return (goals.map((goal, index) => (
+            <React.Fragment key={goal.name}>
+                {index === i ? <div className="dropdown-divider"></div> : null}
+                <button className="dropdown-item"
+                    onClick={() => selectClueIcon(goal.index)}>
+                    {goal.name}
+                </button>
+            </React.Fragment>
         )));
     };
 
     return (
         <React.Fragment>
-            <nav className="navbar sticky-top bg-dark navbar-dark">
-
-
-                <div class="btn-group nav-item">
+            <nav className="navbar sticky-top bg-dark">
+                <div className="btn-group nav-item">
                     <button className="btn btn-dark btn-lg dropdown-toggle text-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Goals
-                </button>
+                    </button>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {displayGoalDropdownIcons()}
                     </div>

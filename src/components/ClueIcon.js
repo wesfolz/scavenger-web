@@ -54,7 +54,7 @@ export default class ClueIcon extends Component {
 
     displayInfoCard() {
         if (this.props.showInfo) {
-            return (<div className="card" style={{ width: '8rem' }}>
+            return (<div className="card position-absolute" style={{ width: '8rem' }}>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.name}</h5>
                     <h6 className="card-subtitle mb-2 text-muted">{this.props.status}</h6>
@@ -68,7 +68,7 @@ export default class ClueIcon extends Component {
     render() {
         return (
             <div>
-                <button className="btn btn-outline-light btn-sm" data-toggle="tooltip" title={this.props.name}
+                <button className="btn btn-link btn-sm" data-toggle="tooltip" title={this.props.name}
                     onClick={() => this.props.onClick()}>
                     <FontAwesomeIcon
                         icon={this.getIconName()} size='2x' color={this.getColor()} />

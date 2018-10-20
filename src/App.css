@@ -8,9 +8,9 @@
 .content {
     display: flex;
     flex-direction: row;
-    overflow: hidden;
     justify-content: flex-end;
-    height: 100%;
+    overflow: hidden;
+    /*height: 100%;*/
 }
 
 .visible {
@@ -19,4 +19,10 @@
 
 .hidden {
     margin-right: -500px;
+}
+
+@media screen and (max-width: 576px) {
+    h5 {
+        font-size:16px;
+    }
 }

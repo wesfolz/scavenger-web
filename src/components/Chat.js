@@ -95,7 +95,6 @@ export default class Chat extends Component {
 
     scrollToBottom() {
         if (this.messagesEnd != null && this.messageUpdate) {
-            console.log(this.messageUpdate);
             this.messagesEnd.scrollIntoView({ behavior: "smooth" });
             this.messageUpdate = false;
         }
